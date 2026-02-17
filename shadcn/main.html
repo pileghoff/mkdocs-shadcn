@@ -3,8 +3,7 @@
 
 <head>
     <script>
-        // for search plugin notably
-        const base_url = "{{ config.site_url }}";
+        const base_url = {{ base_url|tojson }};
     </script>
     {% include "templates/dark.html" %}
 
