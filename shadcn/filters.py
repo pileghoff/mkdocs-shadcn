@@ -4,14 +4,17 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Union
 from urllib.error import URLError
-
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import get_plugin_logger
 from mkdocs.structure.nav import Navigation, Section
 from mkdocs.structure.pages import Page
+from pathlib import posixpath
+try:
+    from jinja2 import pass_context as contextfilter  # type: ignore
+except ImportError:
+    from jinja2 import contextfilter  # type: ignore
 
 logger = get_plugin_logger("filters")
-
 
 @lru_cache()
 def iconify(key: str, height: str = "20px", **kwargs) -> str:
@@ -88,6 +91,10 @@ def file_exists(path: str, config: MkDocsConfig) -> bool:
     p: Path = Path(config.docs_dir) / Path(path)
     return p.exists() and p.is_file()
 
+@contextfilter
+def url2_filter(context, value: str) -> str:
+    """A Template filter to normalize URLs."""
+    return posixpath.join(context.parent['base_url'], value)
 
 def is_http_url(path: str) -> bool:
     """Check if a path is a valid URL (http, https and also data scheme)"""

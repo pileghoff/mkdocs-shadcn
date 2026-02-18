@@ -14,6 +14,7 @@ from shadcn.filters import (
     is_http_url,
     parse_author,
     setattribute,
+    url2_filter,
 )
 from shadcn.plugins.mixins.dev import DevServerMixin
 from shadcn.plugins.mixins.git import GitTimestampsMixin
@@ -51,6 +52,7 @@ class SearchPlugin(
         env.filters["first_page"] = first_page
         env.filters["file_exists"] = partial(file_exists, config=config)
         env.filters["is_http_url"] = is_http_url
+        env.filters["url2"] = url2_filter
         return super().on_env(env, config=config, files=files)
 
     def on_page_markdown(
