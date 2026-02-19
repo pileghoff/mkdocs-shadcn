@@ -8,7 +8,7 @@ from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import get_plugin_logger
 from mkdocs.structure.nav import Navigation, Section
 from mkdocs.structure.pages import Page
-from pathlib import posixpath
+import posixpath
 try:
     from jinja2 import pass_context as contextfilter  # type: ignore
 except ImportError:
